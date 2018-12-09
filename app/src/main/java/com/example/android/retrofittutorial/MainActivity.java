@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -70,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Send request to url with different endpoint
         sendRequestToUrl();
+
+        // Multipart
+        uploadFile();
     }
 
     public void getUserIp() {
@@ -207,11 +213,7 @@ public class MainActivity extends AppCompatActivity {
         api.sendRequest("https://api.ipify.org").enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    Log.d("RetrofitExample ", response.body().string());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                // We can check result by displaying it using logs
             }
 
             @Override
@@ -219,5 +221,39 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void uploadFile() {
+
+        try {
+
+            File file = new File(getCacheDir(), "hello.txt");
+            FileWriter writer = new FileWriter(file);
+            writer.append("Hello");
+            writer.flush();
+            writer.close();
+
+            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
+
+            api.uploadFile("https://file.io/", part).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    try {
+                        Log.d("RetrofitTag", response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
