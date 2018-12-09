@@ -13,6 +13,6 @@ public interface Api {
 
     // Send get request
     @GET("/users")
-    Call<ResponseBody> getPosts();
+    Call<ResponseBody> getUsers();
 
 }

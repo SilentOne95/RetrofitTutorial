@@ -31,14 +31,9 @@ public class MainActivity extends AppCompatActivity {
             // Called when response is received
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    Log.d("RetrofitTutorial - IP ", response.body().string());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                // We can check result by displaying it using logs
             }
 
-            // Called when network exception happens
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
 
@@ -46,14 +41,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Returns list of posts
-        api.getPosts().enqueue(new Callback<ResponseBody>() {
+        api.getUsers().enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    Log.d("Users list ", response.body().string());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                // We can check result by displaying it using logs
             }
 
             @Override
