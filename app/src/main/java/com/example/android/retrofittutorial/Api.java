@@ -12,6 +12,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
+import retrofit2.http.Url;
 
 // Interface for our api
 public interface Api {
@@ -48,4 +49,7 @@ public interface Api {
     @GET("/posts/{id}")
     Call<ResponseBody> getPostsByIdToUrl(@Path("id") int id);
 
+    // Sending request to url with different endpoint
+    @GET
+    Call<ResponseBody> sendRequest(@Url String url);
 }

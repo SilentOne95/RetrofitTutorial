@@ -67,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Send request by changing part of the url
         getPostsByChangingUrl();
+
+        // Send request to url with different endpoint
+        sendRequestToUrl();
     }
 
     public void getUserIp() {
@@ -187,6 +190,21 @@ public class MainActivity extends AppCompatActivity {
     public void getPostsByChangingUrl() {
 
         api.getPostsByIdToUrl(1).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                // We can check result by displaying it using logs
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void sendRequestToUrl() {
+
+        api.sendRequest("https://api.ipify.org").enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
