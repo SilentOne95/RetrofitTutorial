@@ -26,4 +26,9 @@ public interface Api {
     // Send request with Query annotation to set 'userId' parameter with name userId
     @GET("/posts")
     Call<ResponseBody> getPostsByUserId(@Query("userId") int userId);
+
+    // Send request with many parameters
+    @GET("/posts")
+    Call<ResponseBody> getPostsByUserIdAndPostId(@Query("userId") int userId, @Query("id") int postId);
+
 }

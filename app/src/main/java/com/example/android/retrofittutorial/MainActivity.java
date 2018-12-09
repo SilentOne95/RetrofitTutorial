@@ -51,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Send single parameter using @Query
         getPostsByUserId();
+
+        // Send request with multiple parameters
+        getPostByTwoParameters();
     }
 
     public void getUserIp() {
@@ -102,6 +105,23 @@ public class MainActivity extends AppCompatActivity {
     public void getPostsByUserId() {
 
         api.getPostsByUserId(1).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                // We can check result by displaying it using logs
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void getPostByTwoParameters() {
+
+        int userId = 1;
+        int postId = 2;
+        api.getPostsByUserIdAndPostId(userId, postId).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
