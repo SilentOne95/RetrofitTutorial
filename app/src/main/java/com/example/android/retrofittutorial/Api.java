@@ -1,6 +1,7 @@
 package com.example.android.retrofittutorial;
 
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -9,6 +10,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 // Interface for our api
 public interface Api {
@@ -36,5 +38,9 @@ public interface Api {
     // Send request with parameters with the same name
     @GET("/posts")
     Call<ResponseBody> getPostsByIds(@Query("id") List<Integer> ids);
+
+    // Send request with map of parameters
+    @GET("/posts")
+    Call<ResponseBody> getPostsByParams(@QueryMap Map<String, String> params);
 
 }

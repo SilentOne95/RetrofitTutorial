@@ -6,7 +6,9 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -55,10 +57,13 @@ public class MainActivity extends AppCompatActivity {
         getPostsByUserId();
 
         // Send request with multiple parameters
-        getPostByTwoParameters();
+        getPostsByTwoParameters();
 
         // Send request with the same parameters
-        getPostByIds();
+        getPostsByIds();
+
+        // Send request with map of parameters
+        getPostsWithMapOfParams();
     }
 
     public void getUserIp() {
@@ -122,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void getPostByTwoParameters() {
+    public void getPostsByTwoParameters() {
 
         int userId = 1;
         int postId = 2;
@@ -139,14 +144,31 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void getPostByIds() {
-
+    public void getPostsByIds() {
         List<Integer> ids = new ArrayList<>();
         ids.add(1);
         ids.add(2);
         ids.add(3);
 
         api.getPostsByIds(ids).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                // We can check result by displaying it using logs
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void getPostsWithMapOfParams() {
+        Map<String, String> params = new HashMap<>();
+        params.put("userId", "1");
+        params.put("id", "2");
+
+        api.getPostsByParams(params).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
