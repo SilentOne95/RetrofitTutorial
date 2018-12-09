@@ -64,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Send request with map of parameters
         getPostsWithMapOfParams();
+
+        // Send request by changing part of the url
+        getPostsByChangingUrl();
     }
 
     public void getUserIp() {
@@ -169,6 +172,21 @@ public class MainActivity extends AppCompatActivity {
         params.put("id", "2");
 
         api.getPostsByParams(params).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                // We can check result by displaying it using logs
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void getPostsByChangingUrl() {
+
+        api.getPostsByIdToUrl(1).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
