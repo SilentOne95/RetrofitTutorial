@@ -1,5 +1,7 @@
 package com.example.android.retrofittutorial;
 
+import java.util.List;
+
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -30,5 +32,9 @@ public interface Api {
     // Send request with many parameters
     @GET("/posts")
     Call<ResponseBody> getPostsByUserIdAndPostId(@Query("userId") int userId, @Query("id") int postId);
+
+    // Send request with parameters with the same name
+    @GET("/posts")
+    Call<ResponseBody> getPostsByIds(@Query("id") List<Integer> ids);
 
 }

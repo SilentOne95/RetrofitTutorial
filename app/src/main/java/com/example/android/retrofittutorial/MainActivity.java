@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -54,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Send request with multiple parameters
         getPostByTwoParameters();
+
+        // Send request with the same parameters
+        getPostByIds();
     }
 
     public void getUserIp() {
@@ -122,6 +127,26 @@ public class MainActivity extends AppCompatActivity {
         int userId = 1;
         int postId = 2;
         api.getPostsByUserIdAndPostId(userId, postId).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                // We can check result by displaying it using logs
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void getPostByIds() {
+
+        List<Integer> ids = new ArrayList<>();
+        ids.add(1);
+        ids.add(2);
+        ids.add(3);
+
+        api.getPostsByIds(ids).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
