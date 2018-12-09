@@ -11,7 +11,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.http.GET;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,14 +21,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Retrofit instance and set base url
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.ipify.org/")
+                .baseUrl("https://jsonplaceholder.typicode.com/")
                 .build();
 
         Api api = retrofit.create(Api.class);
 
         // Sends request to get IP address
         api.getIp().enqueue(new Callback<ResponseBody>() {
-
             // Called when response is received
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -46,13 +44,22 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-    }
 
-    // Interface for our api
-    interface Api {
+        // Returns list of posts
+        api.getPosts().enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    Log.d("Users list ", response.body().string());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 
-        // Method which gets IP address
-        @GET("/")
-        Call<ResponseBody> getIp();
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 }
