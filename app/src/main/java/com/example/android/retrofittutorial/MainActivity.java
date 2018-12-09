@@ -2,6 +2,9 @@ package com.example.android.retrofittutorial;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+
+import java.io.IOException;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -45,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Sends info in post request
         sendUserData();
+
+        // Send single parameter using @Query
+        getPostsByUserId();
     }
 
     public void getUserIp() {
@@ -84,6 +90,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 // We can check result by displaying it using logs
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void getPostsByUserId() {
+
+        api.getPostsByUserId(1).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    Log.d("RetrofitExample ", response.body().string());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

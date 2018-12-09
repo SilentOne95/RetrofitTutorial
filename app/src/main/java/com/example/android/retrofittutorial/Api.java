@@ -6,6 +6,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 // Interface for our api
 public interface Api {
@@ -21,4 +22,8 @@ public interface Api {
     // Post user's info to server
     @POST("/users")
     Call<ResponseBody> postUser(@Body RequestBody requestBody);
+
+    // Send request with Query annotation to set 'userId' parameter with name userId
+    @GET("/posts")
+    Call<ResponseBody> getPostsByUserId(@Query("userId") int userId);
 }
