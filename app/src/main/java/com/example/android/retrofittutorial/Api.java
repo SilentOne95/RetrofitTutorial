@@ -94,7 +94,11 @@ public interface Api {
     @GET("https://httpbin.org/basic-auth/myusername/mypassword")
     Call<ResponseBody> sendTaskRequest(@Header("Authorization") String authorization);
 
-    //
+    // Request, json converter
     @GET("/comments/{id}")
     Call<Comment> getCommentById(@Path("id") int id);
+
+    // Task
+    @GET("/posts/{id}")
+    Call<Post> getPostsById(@Path("id") String id);
 }

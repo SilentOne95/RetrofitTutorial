@@ -24,16 +24,15 @@ public class MainActivity extends AppCompatActivity {
 
         Api api = retrofit.create(Api.class);
 
-        // Deserialize json data using json converter and how to integrate it to retrofit library
-        api.getCommentById(1).enqueue(new Callback<Comment>() {
+        api.getPostsById("1").enqueue(new Callback<Post>() {
             @Override
-            public void onResponse(Call<Comment> call, Response<Comment> response) {
-                Comment comment = response.body();
-                Log.d("RetrofitExample", comment.getBody());
+            public void onResponse(Call<Post> call, Response<Post> response) {
+                Post post = response.body();
+                Log.d("RetrofitExample", post.getTitle());
             }
 
             @Override
-            public void onFailure(Call<Comment> call, Throwable t) {
+            public void onFailure(Call<Post> call, Throwable t) {
 
             }
         });

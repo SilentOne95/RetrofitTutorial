@@ -58,4 +58,5 @@ public class Comment {
     public void setBody(String body) {
         this.body = body;
     }
+
 }
