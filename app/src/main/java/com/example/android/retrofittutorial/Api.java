@@ -5,7 +5,6 @@ import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -94,4 +93,8 @@ public interface Api {
     // Task
     @GET("https://httpbin.org/basic-auth/myusername/mypassword")
     Call<ResponseBody> sendTaskRequest(@Header("Authorization") String authorization);
+
+    //
+    @GET("/comments/{id}")
+    Call<Comment> getCommentById(@Path("id") int id);
 }
