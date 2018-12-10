@@ -8,6 +8,8 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -60,4 +62,19 @@ public interface Api {
     @Multipart
     @POST
     Call<ResponseBody> uploadFile(@Url String url, @Part MultipartBody.Part part);
+
+    @Multipart
+    @POST
+    Call<ResponseBody> uploadAnotherFile(@Url String url,
+                                         @Part("apikey") RequestBody apiKey,
+                                         @Part("language") RequestBody language,
+                                         @Part MultipartBody.Part file);
+
+    // Sending post request to posts endpoint
+    @FormUrlEncoded
+    @POST("/posts")
+    Call<ResponseBody> postPost(@Field("id") String id,
+                                @Field("userId") String userId,
+                                @Field("title") String title,
+                                @Field("body") String body);
 }

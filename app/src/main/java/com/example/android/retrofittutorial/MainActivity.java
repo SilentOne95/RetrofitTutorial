@@ -76,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Multipart
         uploadFile();
+
+        // Send request with form encoded data
+        postPost();
     }
 
     public void getUserIp() {
@@ -239,11 +242,7 @@ public class MainActivity extends AppCompatActivity {
             api.uploadFile("https://file.io/", part).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    try {
-                        Log.d("RetrofitTag", response.body().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    // We can check result by displaying it using logs
                 }
 
                 @Override
@@ -255,5 +254,29 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void postPost() {
+
+        String id = "1";
+        String userId = "2";
+        String title = "This is title";
+        String body = "This is body";
+
+        api.postPost(id, userId, title, body).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    Log.d("RetrofitTag", response.body().string());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 }
