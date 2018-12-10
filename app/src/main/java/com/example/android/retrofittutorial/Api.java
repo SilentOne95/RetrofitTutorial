@@ -90,4 +90,8 @@ public interface Api {
     @GET("http://httpbin.org/get")
     Call<ResponseBody> sendRequestWithHeadersDynamic(@Header("Content-Type") String contentType,
                                                      @Header("User-Agent") String userAgent);
+
+    // Task
+    @GET("https://httpbin.org/basic-auth/myusername/mypassword")
+    Call<ResponseBody> sendTaskRequest(@Header("Authorization") String authorization);
 }

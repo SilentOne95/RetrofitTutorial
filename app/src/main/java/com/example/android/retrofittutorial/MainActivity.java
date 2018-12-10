@@ -2,6 +2,7 @@ package com.example.android.retrofittutorial;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 
 import java.io.File;
@@ -85,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
 
         // ... dynamic way
         getWithTwoHeadersDynamic();
+
+        // Task
+        sendTaskRequest();
     }
 
     public void getUserIp() {
@@ -305,8 +309,28 @@ public class MainActivity extends AppCompatActivity {
         api.sendRequestWithHeadersDynamic(contentType, userAgent).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                // We can check result by displaying it using logs
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void sendTaskRequest() {
+
+        String username = "myusername";
+        String password = "mypassword";
+        String userAndPassword = username + ":" + password;
+        String authorization = "Basic " + Base64.encodeToString(userAndPassword.getBytes(), Base64.NO_WRAP);
+
+        api.sendTaskRequest(authorization).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    Log.d("RetrofitTag", response.body().string());
+                    Log.d("RetrofitExample", response.body().string());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
