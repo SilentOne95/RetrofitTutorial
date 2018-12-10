@@ -77,8 +77,14 @@ public class MainActivity extends AppCompatActivity {
         // Multipart
         uploadFile();
 
-        // Send request with form encoded data
+        // Send post request with form encoded data
         postPost();
+
+        // Send request with two headers (in static way)
+        getWithTwoHeaders();
+
+        // ... dynamic way
+        getWithTwoHeadersDynamic();
     }
 
     public void getUserIp() {
@@ -264,6 +270,39 @@ public class MainActivity extends AppCompatActivity {
         String body = "This is body";
 
         api.postPost(id, userId, title, body).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                // We can check result by displaying it using logs
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void getWithTwoHeaders() {
+
+        api.sendRequestWithHeaders().enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                // We can check result by displaying it using logs
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void getWithTwoHeadersDynamic() {
+
+        String contentType = "application/json";
+        String userAgent = "RetrofitExample";
+
+        api.sendRequestWithHeadersDynamic(contentType, userAgent).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
