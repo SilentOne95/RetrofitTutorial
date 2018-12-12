@@ -1,5 +1,7 @@
 package com.example.android.retrofittutorial;
 
+import com.example.android.retrofittutorial.Model.User;
+
 import java.util.List;
 import java.util.Map;
 
@@ -101,4 +103,8 @@ public interface Api {
     // Task
     @GET("/posts/{id}")
     Call<Post> getPostsById(@Path("id") String id);
+
+    // Create classes faster using JsonSchema2Pojo
+    @GET("/users/{id}")
+    Call<User> getUserById(@Path("id") String id);
 }

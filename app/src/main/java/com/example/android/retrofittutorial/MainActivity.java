@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.android.retrofittutorial.Model.User;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,15 +26,15 @@ public class MainActivity extends AppCompatActivity {
 
         Api api = retrofit.create(Api.class);
 
-        api.getPostsById("1").enqueue(new Callback<Post>() {
+        api.getUserById("1").enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<Post> call, Response<Post> response) {
-                Post post = response.body();
-                Log.d("RetrofitExample", post.getTitle());
+            public void onResponse(Call<User> call, Response<User> response) {
+                User user = response.body();
+                Log.d("RetrofitExample", user.getEmail());
             }
 
             @Override
-            public void onFailure(Call<Post> call, Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
 
             }
         });
