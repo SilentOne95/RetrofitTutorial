@@ -1,7 +1,6 @@
 package com.example.android.retrofittutorial.Fragment;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,12 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.android.retrofittutorial.Adapter.StandingsAdapter;
+import com.example.android.retrofittutorial.Adapter.FixturesAdapter;
 import com.example.android.retrofittutorial.App.Api;
 import com.example.android.retrofittutorial.App.App;
+import com.example.android.retrofittutorial.Fixtures.FixtureDatum;
+import com.example.android.retrofittutorial.Fixtures.FixturesResult;
 import com.example.android.retrofittutorial.R;
-import com.example.android.retrofittutorial.Standings.StandingDatum;
-import com.example.android.retrofittutorial.Standings.StandingsResult;
 
 import java.util.List;
 
@@ -24,12 +23,10 @@ import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link StandingsFragment#newInstance} factory method to
+ * Use the {@link FixturesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StandingsFragment extends Fragment {
-
-    final int SEASON_ID = 7953;
+public class FixturesFragment extends Fragment {
 
     Api api;
     RecyclerView recycler;
@@ -40,8 +37,7 @@ public class StandingsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-
-    public StandingsFragment() {
+    public FixturesFragment() {
         // Required empty public constructor
     }
 
@@ -51,10 +47,10 @@ public class StandingsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment StandingsFragment.
+     * @return A new instance of fragment FixturesFragment.
      */
-    public static StandingsFragment newInstance(String param1, String param2) {
-        StandingsFragment fragment = new StandingsFragment();
+    public static FixturesFragment newInstance(String param1, String param2) {
+        FixturesFragment fragment = new FixturesFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -72,39 +68,42 @@ public class StandingsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_standings, container, false);
+        View view = inflater.inflate(R.layout.fragment_fixtures, container, false);
 
         recycler = view.findViewById(R.id.recycler);
-        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        api = App.getApi();
 
-        getStandings();
+        getFixtures();
 
         return view;
     }
 
-    private void getStandings(){
+    private void getFixtures() {
 
-        api = App.getApi();
-        api.getStandings(SEASON_ID).enqueue(new Callback<StandingsResult>() {
+        final int roundId = 129121;
+
+        String include = "fixtures.localTeam,fixtures.visitorTeam";
+
+        api.getRoundWithFixtures(roundId, include).enqueue(new Callback<FixturesResult>() {
             @Override
-            public void onResponse(@NonNull Call<StandingsResult> call, @NonNull Response<StandingsResult> response) {
-                StandingsResult standingsResult = response.body();
-                showStandings(standingsResult.getData().get(0).getStandings().getData());
+            public void onResponse(Call<FixturesResult> call, Response<FixturesResult> response) {
+                FixturesResult roundResult = response.body();
+                showFixtures(roundResult.getData().getFixtures().getData());
             }
 
             @Override
-            public void onFailure(@NonNull Call<StandingsResult> call, @NonNull Throwable t) {
+            public void onFailure(Call<FixturesResult> call, Throwable t) {
 
             }
         });
-
     }
 
-    private void showStandings(List<StandingDatum> standings){
-        StandingsAdapter adapter = new StandingsAdapter(standings);
-        recycler.setAdapter(adapter);
+    private void showFixtures(List<FixtureDatum> fixtures) {
+        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        recycler.setAdapter(new FixturesAdapter(fixtures));
     }
+
 }

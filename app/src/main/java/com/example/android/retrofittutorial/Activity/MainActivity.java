@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.android.retrofittutorial.Fragment.FixturesFragment;
 import com.example.android.retrofittutorial.Fragment.StandingsFragment;
 import com.example.android.retrofittutorial.R;
 
@@ -31,7 +32,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         .commit();
                 return true;
             case R.id.nav_fixtures:
-
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content, FixturesFragment.newInstance(null, null))
+                        .commit();
                 return true;
             case R.id.nav_top_scorers:
 
