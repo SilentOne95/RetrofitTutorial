@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.android.retrofittutorial.Fragment.StandingsFragment;
 import com.example.android.retrofittutorial.R;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -24,7 +25,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.nav_standings:
-
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content, StandingsFragment.newInstance(null, null))
+                        .commit();
                 return true;
             case R.id.nav_fixtures:
 
