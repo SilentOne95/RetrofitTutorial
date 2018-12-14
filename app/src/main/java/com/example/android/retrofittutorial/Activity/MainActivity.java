@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import com.example.android.retrofittutorial.Fragment.FixturesFragment;
 import com.example.android.retrofittutorial.Fragment.StandingsFragment;
+import com.example.android.retrofittutorial.Fragment.TopScorersFragment;
 import com.example.android.retrofittutorial.R;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -38,7 +39,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         .commit();
                 return true;
             case R.id.nav_top_scorers:
-
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content, TopScorersFragment.newInstance(null, null))
+                        .commit();
                 return true;
         }
 
